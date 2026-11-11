@@ -1,0 +1,36 @@
+{
+  "units_note": "origin at the bottom-left corner of the PNG; y grows up (negative in Godot)",
+  "chair": {
+    "texture": "res://game/art/furniture/chair.png",
+    "width": 168,
+    "height": 276,
+    "seat_top_y": 144,
+    "seat_back_x": 42,
+    "seat_front_x": 168,
+    "seat_center_x": 105,
+    "backrest_side": "left",
+    "art_pixel": 6
+  },
+  "bed": {
+    "texture": "res://game/art/furniture/bed.png",
+    "width": 570,
+    "height": 222,
+    "mattress_top_y": 138,
+    "pillow_x": 96,
+    "pillow_left_x": 42,
+    "foot_x": 522,
+    "headboard_side": "left",
+    "pillow_to_foot": 480,
+    "art_pixel": 6,
+    "layers": {
+      "back": "res://game/art/furniture/bed_back.png",
+      "front": "res://game/art/furniture/bed_front.png"
+    },
+    "body_line_y": 102,
+    "blanket_peak_y": 162,
+    "blanket_mound_x": [
+      204,
+      492
+    ]
+  }
+}

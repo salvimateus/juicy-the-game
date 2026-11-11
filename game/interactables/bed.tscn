@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/interactables/furniture.gd" id="1_furniture"]
+
+[node name="Bed" type="Node2D"]
+script = ExtResource("1_furniture")
+prop = "bed"
+prompt = "Deitar e dormir"
+exit_prompt = "Levantar"
+enter_action = &"lie_down"
+loop_action = &"sleeping"
+exit_action = &"get_up"
+sound = &"bed_creak"
+haptic_id = &"bed_creak"
+haptic_strength = 0.25
+interact_radius = 260.0
+min_rest_time = 0.6
+exit_timeout = 2.2

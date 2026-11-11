@@ -1,0 +1,163 @@
+class_name ReactionTuning
+## Hit reactions (hurt, shot_hit). Distances in rig units, angles in degrees, times in seconds.
+## Values are written for a hit from the front (the JS case); a hit from behind mirrors the
+## directional channels (knockback, recoil, flings) through the *Behind entries.
+
+const T := {
+	"hurt": {
+		# JS hit timeline: keys in u of anim_seconds; the game action ends at endU (pose back to
+		# idle), plus the hitstop held on the impact frame (juice only).
+		"anim_seconds": 1.2,
+		"endU": 0.7,
+		"impactEnd": 0.03,
+		"holdEnd": 0.1,
+		"recoverEnd": 0.62,
+		# Animation time when he is upright again after the jolt: action_event &"can_move".
+		"canMoveAt": 0.3,
+		"flashSeconds": 0.05,
+		"flashAlpha": 0.95,
+		"shakeSeconds": 0.22,
+		"shakeAmp": 5.0,
+		"shakeFreq": 38.0,
+		# Root motion away from the hit; the feet skid part of it, the two recovery steps the rest.
+		"knockback": -22.0,
+		"skidShare": 0.5,
+		"hipBack": -8.0,
+		"hipDrop": 8.0,
+		"torsoRecoil": -20.0,
+		"neckRecoil": -16.0,
+		"armFling": -35.0,
+		"backArmShare": 0.8,
+		"elbowFling": -30.0,
+		# Limp wrists so the arm thrown forward reads as a flail, not a punch.
+		"handDroop": 40.0,
+		"scarfFling": 22.0,
+		"hairFling": 10.0,
+		# From behind: the body pitches forward, the arms trail back with the elbows kept bent.
+		"torsoRecoilBehind": 16.0,
+		"neckRecoilBehind": 12.0,
+		"armFlingBehind": 22.0,
+		"elbowFlingBehind": -20.0,
+		"handDroopBehind": 10.0,
+		"scarfFlingBehind": -16.0,
+		"hairFlingBehind": -8.0,
+		"stepLift": 12.0,
+		"stepToe": 10.0,
+		"stepFront": [0.3, 0.45],
+		"stepBack": [0.43, 0.58],
+		"stepStrength": 0.45,
+		# In the air: upper body only, ends on landing or after this u.
+		"airEndU": 0.62,
+		"juice": {
+			"squash": 0.1,
+			"hitstop": 0.09,
+			"tintColor": "#ff3030",
+			"tintAlpha": 0.55,
+			"tintSeconds": 0.3,
+			"shakeAmp": 9.0,
+			"shakeSeconds": 0.32,
+			"sparks": 9,
+			"sparkSpeed": 280.0,
+			"sparkLife": 0.26,
+			"impactX": 58.0,
+			"impactXBehind": -44.0,
+			"impactY": -262.0,
+			"springAmp": 16.0,
+			"springDecay": 0.18,
+			"springFreq": 4.0,
+			"skidDust": {"count": 4, "life": 0.35, "speed": 30.0, "rise": 18.0, "spread": 30.0, "dir": -1},
+			"stepDust": {"count": 2, "life": 0.3, "speed": 20.0, "rise": 14.0, "spread": 16.0},
+		},
+	},
+	"shot": {
+		# JS shot timeline in anim seconds a. The game action starts at the impact (a = impactAt)
+		# and ends at endA; the hitstop holds the impact pose first (juice only).
+		"impactAt": 0.26,
+		"endA": 2.85,
+		"skid": {"at": [0.26, 0.36], "dx": -14.0},
+		# Stagger step back, then (instead of the JS walk home) two settle steps that square the
+		# feet under the new spot: root motion keeps the stagger distance.
+		"steps": [
+			{"side": "front", "at": [0.38, 0.54], "dx": -30.0, "lift": 14.0, "toe": 12.0},
+			{"side": "front", "at": [2.3, 2.5], "dx": 15.0, "lift": 12.0, "toe": -8.0},
+			{"side": "back", "at": [2.44, 2.6], "dx": -15.0, "lift": 8.0, "toe": 6.0},
+		],
+		"stepStrength": 0.5,
+		"kneel": [[0.54, 0.0], [0.84, 1.0, "in"], [0.9, 0.95, "out"], [0.98, 1.0], [1.75, 1.0, "linear"], [1.98, 0.72], [2.06, 0.76], [2.32, 0.0]],
+		"kneelLanding": 0.84,
+		"riseAt": 1.75,
+		# Animation time when he is standing after rising off the knee: action_event &"can_move".
+		"canMoveAt": 2.2,
+		"standAt": 2.32,
+		"kneelFootAngle": 70.0,
+		"kneeHeight": 45.0,
+		"kneeForward": 30.0,
+		"thighLean": 6.0,
+		"kneelFrontFoot": 46.0,
+		"kneelStepLift": 14.0,
+		"joltSeconds": 0.05,
+		"hipLead": -12.0,
+		"hipDrop": 10.0,
+		"torso": [[0.31, -30.0, "out"], [0.5, -14.0], [0.84, 16.0], [0.95, 12.0], [1.75, 14.0], [2.0, 10.0], [2.3, 4.0], [2.75, 0.0, "back"]],
+		"neck": [[0.33, -30.0, "out"], [0.45, -6.0], [0.86, 20.0], [1.75, 18.0], [2.1, 6.0], [2.5, -4.0], [2.85, 0.0]],
+		# From behind: thrown forward first, then the same slump on the knee.
+		"torsoBehind": [[0.31, 26.0, "out"], [0.5, 20.0], [0.84, 16.0], [0.95, 12.0], [1.75, 14.0], [2.0, 10.0], [2.3, 4.0], [2.75, 0.0, "back"]],
+		"neckBehind": [[0.33, -18.0, "out"], [0.45, 4.0], [0.86, 20.0], [1.75, 18.0], [2.1, 6.0], [2.5, -4.0], [2.85, 0.0]],
+		"tremble": 1.6,
+		"trembleFreq": 7.0,
+		"breath": 3.0,
+		"breathFreq": 1.6,
+		"armFling": -45.0,
+		"elbowFling": -40.0,
+		"backArmFling": -25.0,
+		"backElbowFling": -55.0,
+		"armFlingBehind": 26.0,
+		"elbowFlingBehind": -30.0,
+		"backArmFlingBehind": 18.0,
+		"backElbowFlingBehind": -40.0,
+		"scarfFling": 30.0,
+		"hairFling": 14.0,
+		"handToChest": [0.34, 0.52, 2.4, 2.72],
+		"chestWrist": [-16.0, -76.0],
+		"chestHandAngle": -100.0,
+		"braceOffset": [8.0, -14.0],
+		# In the air: impact jolt and hand to the wound only, ends on landing or at airEndA.
+		"airEndA": 1.1,
+		"juice": {
+			"hitstop": 0.14,
+			"flashSeconds": 0.04,
+			"flashAlpha": 0.9,
+			"tintColor": "#a01015",
+			"tintAlpha": 0.18,
+			"tintSeconds": 0.08,
+			"shakeAmp": 13.0,
+			"shakeSeconds": 0.42,
+			"shakeFreq": 34.0,
+			"kneelShake": 4.0,
+			"kneelShakeSeconds": 0.18,
+			"squash": 0.12,
+			"springAmp": 22.0,
+			"springDecay": 0.2,
+			"springFreq": 4.0,
+			"dust": {"count": 5, "life": 0.4, "speed": 34.0, "rise": 16.0, "spread": 30.0, "dir": -1},
+			"stepDust": {"count": 2, "life": 0.4, "speed": 20.0, "rise": 12.0, "spread": 16.0},
+			"kneeDust": {"count": 6, "life": 0.45, "speed": 40.0, "rise": 14.0, "spread": 34.0},
+			"blood": {
+				# Torso-local points (facing right): back of the jacket, chest, wound decal.
+				"exitPoint": [-46.0, -86.0],
+				"frontPoint": [20.0, -86.0],
+				"woundPoint": [14.0, -84.0],
+				# Angles for a bullet travelling to -x (from the front); mirrored for the other way.
+				"spray": {"count": 48, "speed": 820.0, "angle": -165.0, "cone": 42.0, "gravity": 1500.0, "drag": 1.2, "backShare": 0.2, "seed": 11},
+				"jet": {"count": 14, "speed": 380.0, "angle": -30.0, "cone": 34.0, "gravity": 1500.0, "drag": 1.5, "backShare": 0.0, "seed": 23},
+				"mist": {"count": 4, "life": 0.42, "drift": 70.0, "rise": 26.0},
+				"woundGrow": 0.5,
+				# Wound fades with the reaction (seconds after the impact).
+				"woundFade": [2.24, 2.58],
+				"drips": {"count": 14, "from": 0.5, "to": 2.1, "gravity": 1300.0, "jitter": 0.06},
+				# Ground stains stay after the reaction and vanish one by one (seconds after the impact).
+				"stainFade": [3.5, 4.5],
+			},
+		},
+	},
+}

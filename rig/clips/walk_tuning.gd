@@ -1,0 +1,36 @@
+class_name WalkTuning
+## Walk gait. Distances in rig units, angles in degrees, times in seconds.
+
+const T := {
+	"duration": 0.87,
+	"stride": 144.0,
+	"duty": 0.6,
+	"reachX": -8.0,
+	"lift": 18.0,
+	"liftBias": 0.85,
+	"kickBack": 6.0,
+	"heelAngle": 12.0,
+	"toeAngle": 30.0,
+	"heelPhase": 0.16,
+	"toePhase": 0.5,
+	"swingToe": 6.0,
+	"hipDrop": 18.0,
+	"hipLowPhase": 0.08,
+	"hipBob": 3.0,
+	"hipSway": 2.0,
+	"torsoLean": 4.0,
+	"torsoRock": 1.5,
+	"headCounter": -2.0,
+	"scarfLift": -6.0,
+	"scarfWave": 5.0,
+	"scarfPhaseStep": 0.12,
+	"hairBack": 0.0,
+	"hairRot": 0.0,
+	"hairSway": 2.0,
+	"arms": {"back": 18.0, "forward": -22.0, "forwardFront": -12.0, "elbowBack": -8.0, "elbowForward": -26.0, "elbowForwardFront": -18.0},
+	"juice": {
+		"squash": 0.035,
+		"follow": {"headLag": 0.08, "head": 3.0, "elbow": 8.0, "hair": 5.0, "scarf": 10.0},
+		"dust": {"count": 3, "life": 0.4, "speed": 34.0, "rise": 22.0, "spread": 26.0},
+	},
+}

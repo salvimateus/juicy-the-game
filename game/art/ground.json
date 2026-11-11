@@ -1,0 +1,34 @@
+{
+  "art_pixel": 6,
+  "tile_width": 330,
+  "top_height": 216,
+  "fill_height": 198,
+  "surface_y": 102,
+  "grass_top_y": 0,
+  "variants": [
+    {
+      "id": "a",
+      "top": "res://game/art/ground_top_a.png",
+      "fill": "res://game/art/ground_fill_a.png",
+      "top_grass": "res://game/art/ground_top_grass_a.png",
+      "top_dirt": "res://game/art/ground_top_dirt_a.png"
+    },
+    {
+      "id": "b",
+      "top": "res://game/art/ground_top_b.png",
+      "fill": "res://game/art/ground_fill_b.png",
+      "top_grass": "res://game/art/ground_top_grass_b.png",
+      "top_dirt": "res://game/art/ground_top_dirt_b.png"
+    },
+    {
+      "id": "c",
+      "top": "res://game/art/ground_top_c.png",
+      "fill": "res://game/art/ground_fill_c.png",
+      "top_grass": "res://game/art/ground_top_grass_c.png",
+      "top_dirt": "res://game/art/ground_top_dirt_c.png"
+    }
+  ],
+  "dirt_top_y_min": 90,
+  "dirt_top_y_max": 132,
+  "layers_note": "top_grass behind the fog, top_dirt in front; y measured down from the tile top; fog bottom must reach dirt_top_y_max"
+}

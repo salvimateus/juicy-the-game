@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://game/targets/targets_test.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://game/targets/scarecrow.tscn" id="2_scarecrow"]
+[ext_resource type="PackedScene" path="res://game/targets/cup_range.tscn" id="3_cups"]
+[ext_resource type="PackedScene" path="res://game/targets/balloon_launcher.tscn" id="4_balloons"]
+[ext_resource type="PackedScene" path="res://game/targets/punching_bag.tscn" id="5_bag"]
+
+[node name="TargetsTest" type="Node2D"]
+script = ExtResource("1_test")
+
+[node name="Camera" type="Camera2D" parent="."]
+process_callback = 0
+
+[node name="Scarecrow" parent="." instance=ExtResource("2_scarecrow")]
+
+[node name="CupRange" parent="." instance=ExtResource("3_cups")]
+position = Vector2(1500, 0)
+
+[node name="BalloonLauncher" parent="." instance=ExtResource("4_balloons")]
+position = Vector2(3300, 0)
+
+[node name="PunchingBag" parent="." instance=ExtResource("5_bag")]
+position = Vector2(-1500, 0)

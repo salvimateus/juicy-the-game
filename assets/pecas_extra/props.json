@@ -1,0 +1,209 @@
+{
+  "pixelSize": 6,
+  "revolver": {
+    "size": [144, 81],
+    "grip": [28.5, 39],
+    "muzzle": [144, 13.5],
+    "angle": 0,
+    "hammerPivot": [39, 18]
+  },
+  "kunai": {
+    "size": [
+      168,
+      54
+    ],
+    "grip": [
+      51,
+      27
+    ],
+    "tip": [
+      168,
+      27
+    ],
+    "angle": 0
+  },
+  "chair": {
+    "size": [
+      96,
+      180
+    ],
+    "seat": [
+      48,
+      90
+    ],
+    "seatHeight": 90,
+    "seatFront": [
+      96,
+      90
+    ]
+  },
+  "glove_front": {
+    "size": [
+      90,
+      72
+    ],
+    "replaces": "mao_esq.png",
+    "wrist": [
+      8,
+      39
+    ],
+    "impact": [
+      90,
+      42
+    ],
+    "angle": 0
+  },
+  "glove_back": {
+    "size": [
+      84,
+      66
+    ],
+    "replaces": "mao_dir.png",
+    "wrist": [
+      8,
+      36
+    ],
+    "impact": [
+      84,
+      39
+    ],
+    "angle": 0
+  },
+  "bow": {
+    "size": [
+      84,
+      186
+    ],
+    "grip": [
+      69,
+      93
+    ],
+    "stringTop": [
+      24,
+      9
+    ],
+    "stringBottom": [
+      24,
+      177
+    ],
+    "angle": 0
+  },
+  "revolver_hammer": {
+    "size": [24, 21],
+    "pivot": [18, 15],
+    "cockedAngle": -28
+  },
+  "arrow": {
+    "size": [
+      126,
+      42
+    ],
+    "nock": [
+      3,
+      21
+    ],
+    "tip": [
+      126,
+      21
+    ],
+    "angle": 0
+  },
+  "tunnel_floor": {
+    "size": [
+      192,
+      144
+    ],
+    "tileWidth": 192,
+    "surfaceY": 9,
+    "tilesVertically": false
+  },
+  "ladder": {
+    "size": [
+      84,
+      144
+    ],
+    "tileHeight": 144,
+    "rungSpacing": 48,
+    "rungs": [
+      24,
+      72,
+      120
+    ],
+    "view": "front",
+    "railFrontX": 72,
+    "railBackX": 12
+  },
+  "ledge": {
+    "size": [
+      264,
+      180
+    ],
+    "grab": [
+      9,
+      9
+    ],
+    "topY": 6,
+    "faceX": 6
+  },
+  "ak47": {
+    "size": [252, 81],
+    "grip": [75, 48],
+    "foregrip": [168, 22.5],
+    "stock": [0, 40.5],
+    "muzzle": [252, 21],
+    "ejectPort": [120, 9],
+    "angle": 0
+  },
+  "mouth_shout": {
+    "size": [
+      108,
+      30
+    ],
+    "frames": 3,
+    "frameSize": [
+      36,
+      30
+    ],
+    "pivot": [
+      18,
+      0
+    ],
+    "headAnchor": [
+      94,
+      98
+    ]
+  },
+  "tunnel_ceiling": {
+    "size": [
+      192,
+      108
+    ],
+    "tileWidth": 192,
+    "edgeY": 88
+  },
+  "tunnel_wall": {
+    "size": [
+      192,
+      336
+    ],
+    "tileWidth": 192,
+    "tileHeight": 336,
+    "tilesVertically": true
+  },
+  "bed": {
+    "size": [
+      486,
+      210
+    ],
+    "scene": true,
+    "seat": [
+      270,
+      120
+    ],
+    "seatHeight": 90,
+    "pillow": [
+      87,
+      96
+    ]
+  }
+}

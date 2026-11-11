@@ -1,0 +1,65 @@
+{
+  "art_size": [
+    150,
+    100
+  ],
+  "note": "Button centres in art pixels of gamepad.png (top-left origin). lt and rt are label anchors above the shoulders.",
+  "points": {
+    "a": [
+      114,
+      45
+    ],
+    "b": [
+      124,
+      34
+    ],
+    "x": [
+      103,
+      34
+    ],
+    "y": [
+      113,
+      22
+    ],
+    "left_stick": [
+      37,
+      34
+    ],
+    "right_stick": [
+      94,
+      59
+    ],
+    "dpad": [
+      55,
+      60
+    ],
+    "view": [
+      64,
+      36
+    ],
+    "menu": [
+      85,
+      36
+    ],
+    "guide": [
+      74,
+      20
+    ],
+    "lb": [
+      43,
+      5
+    ],
+    "rb": [
+      106,
+      5
+    ],
+    "lt": [
+      43,
+      0
+    ],
+    "rt": [
+      106,
+      0
+    ]
+  }
+}

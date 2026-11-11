@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/interactables/damage_trap.gd" id="1_trap"]
+
+[node name="DamageTrap" type="Node2D"]
+script = ExtResource("1_trap")
+prompt = "Levar dano"
+prompt_offset = Vector2(-108, -462)

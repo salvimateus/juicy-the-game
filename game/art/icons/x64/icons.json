@@ -1,0 +1,7 @@
+{
+  "size": [64, 64],
+  "ids": ["fists", "revolver", "rifle", "bow", "kunai"],
+  "variants": {"active": "<id>.png", "inactive": "<id>_inactive.png", "flash": "<id>_flash.png"},
+  "path": "res://game/art/icons/x64/",
+  "suggested_scale": {"active": 2, "inactive": 1}
+}

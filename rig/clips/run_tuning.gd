@@ -1,0 +1,37 @@
+class_name RunTuning
+## Run gait. Distances in rig units, angles in degrees, times in seconds.
+
+const T := {
+	"duration": 0.52,
+	"stride": 130.0,
+	"duty": 0.36,
+	"reachX": -14.0,
+	"lift": 34.0,
+	"liftBias": 0.7,
+	"kickBack": 20.0,
+	"heelAngle": 4.0,
+	"toeAngle": 34.0,
+	"heelPhase": 0.12,
+	"toePhase": 0.4,
+	"swingToe": 18.0,
+	"hipDrop": 18.0,
+	"hipLowPhase": 0.18,
+	"hipBob": 8.0,
+	"hipSway": 0.0,
+	"torsoLean": 16.0,
+	"torsoRock": 2.0,
+	"headCounter": -7.0,
+	"scarfLift": 10.0,
+	"scarfWave": 9.0,
+	"scarfPhaseStep": 0.18,
+	"hairBack": -5.0,
+	"hairRot": -6.0,
+	"hairSway": 3.0,
+	"arms": {"back": 50.0, "forward": -28.0, "forwardFront": -6.0, "elbowBack": -62.0, "elbowForward": -95.0, "elbowForwardFront": -62.0},
+	"juice": {
+		"squash": 0.06,
+		"follow": {"headLag": 0.08, "head": 3.0, "elbow": 8.0, "hair": 5.0, "scarf": 10.0},
+		"dust": {"count": 6, "life": 0.4, "speed": 34.0, "rise": 22.0, "spread": 26.0},
+		"debris": {"count": 4, "life": 0.45, "speed": 110.0, "up": 170.0, "gravity": 700.0},
+	},
+}

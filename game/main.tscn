@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://game/game.gd" id="1_game"]
+[ext_resource type="Script" path="res://game/level.gd" id="2_level"]
+[ext_resource type="PackedScene" path="res://game/player.tscn" id="3_player"]
+[ext_resource type="Script" path="res://game/game_camera.gd" id="4_camera"]
+[ext_resource type="Script" path="res://game/debug_hud.gd" id="5_hud"]
+[ext_resource type="PackedScene" path="res://game/interactables/interaction_manager.tscn" id="6_interaction"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_game")
+
+[node name="Level" type="Node2D" parent="."]
+script = ExtResource("2_level")
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+
+[node name="Camera" type="Camera2D" parent="."]
+process_callback = 0
+script = ExtResource("4_camera")
+
+[node name="DebugHud" type="CanvasLayer" parent="."]
+script = ExtResource("5_hud")
+
+[node name="InteractionManager" parent="." instance=ExtResource("6_interaction")]
+player_path = NodePath("../Player")

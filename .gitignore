@@ -1,0 +1,7 @@
+# Godot 4+
+.godot/
+/android/
+
+# Build output and debug captures
+build/
+captures/

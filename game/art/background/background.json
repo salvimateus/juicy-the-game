@@ -1,0 +1,182 @@
+{
+ "art_pixel": 6,
+ "units": "world units, y relative to the ground line where the feet rest (ground.json surface), negative is up",
+ "clear_color": "#4e80c2",
+ "horizon_color": "#b2d2ee",
+ "palette": {
+  "sky0": "#4e80c2",
+  "sky1": "#689ad4",
+  "sky2": "#8cb8e4",
+  "sky3": "#b2d2ee",
+  "cloud0": "#f6faff",
+  "cloud1": "#d2e5f6",
+  "cloud2": "#a8c7e8",
+  "far0": "#98b8d8",
+  "far1": "#86a7cc",
+  "near0": "#7c9ec4",
+  "near1": "#6a8db6",
+  "near2": "#5a7ba5",
+  "mist3": "#4e6a92"
+ },
+ "layers": [
+  {
+   "name": "sky",
+   "z_order": 0,
+   "path": "res://game/art/background/bg_sky.png",
+   "size": [
+    96,
+    1440
+   ],
+   "tile_width": 96,
+   "repeat": true,
+   "parallax": 0.0,
+   "screen_fixed": true,
+   "note": "height = viewport height in world units at zoom 0.5 (720*2); bottom row is the horizon colour"
+  },
+  {
+   "name": "clouds",
+   "z_order": 1,
+   "repeat": false,
+   "parallax": 0.06,
+   "drift_direction": -1,
+   "drift_speed_range": [
+    8,
+    18
+   ],
+   "y_band": [
+    -1000,
+    -820
+   ],
+   "wrap_width": 6400,
+   "sprites": [
+    {
+     "path": "res://game/art/background/bg_cloud_1.png",
+     "size": [
+      828,
+      270
+     ],
+     "suggested_x": 300,
+     "suggested_y": -960,
+     "drift_speed": 10
+    },
+    {
+     "path": "res://game/art/background/bg_cloud_2.png",
+     "size": [
+      282,
+      84
+     ],
+     "suggested_x": 1500,
+     "suggested_y": -830,
+     "drift_speed": 16
+    },
+    {
+     "path": "res://game/art/background/bg_cloud_3.png",
+     "size": [
+      582,
+      174
+     ],
+     "suggested_x": 2100,
+     "suggested_y": -1000,
+     "drift_speed": 8
+    },
+    {
+     "path": "res://game/art/background/bg_cloud_4.png",
+     "size": [
+      408,
+      132
+     ],
+     "suggested_x": 3300,
+     "suggested_y": -900,
+     "drift_speed": 14
+    },
+    {
+     "path": "res://game/art/background/bg_cloud_5.png",
+     "size": [
+      366,
+      84
+     ],
+     "suggested_x": 4300,
+     "suggested_y": -820,
+     "drift_speed": 18
+    },
+    {
+     "path": "res://game/art/background/bg_cloud_6.png",
+     "size": [
+      486,
+      132
+     ],
+     "suggested_x": 4900,
+     "suggested_y": -980,
+     "drift_speed": 12
+    },
+    {
+     "path": "res://game/art/background/bg_cloud_7.png",
+     "size": [
+      876,
+      252
+     ],
+     "suggested_x": 5600,
+     "suggested_y": -920,
+     "drift_speed": 9
+    }
+   ],
+   "note": "y_band is the sprite top edge; wrap clouds that leave the wrap_width window"
+  },
+  {
+   "name": "mountains_far",
+   "z_order": 2,
+   "path": "res://game/art/background/bg_mountains_far.png",
+   "size": [
+    6000,
+    564
+   ],
+   "tile_width": 6000,
+   "repeat": true,
+   "parallax": 0.12,
+   "y": -750,
+   "bottom_y": -186
+  },
+  {
+   "name": "fog",
+   "z_order": 3,
+   "path": "res://game/art/background/bg_fog.png",
+   "size": [
+    3840,
+    432
+   ],
+   "tile_width": 3840,
+   "repeat": true,
+   "parallax": 0.2,
+   "y": -650,
+   "bottom_y": -218
+  },
+  {
+   "name": "mountains_near",
+   "z_order": 4,
+   "path": "res://game/art/background/bg_mountains_near.png",
+   "size": [
+    7926,
+    654
+   ],
+   "tile_width": 7926,
+   "repeat": true,
+   "parallax": 0.35,
+   "y": -660,
+   "bottom_y": -6
+  },
+  {
+   "name": "mist",
+   "z_order": 5,
+   "path": "res://game/art/background/bg_mist.png",
+   "size": [
+    2304,
+    660
+   ],
+   "tile_width": 2304,
+   "repeat": true,
+   "parallax": 0.45,
+   "y": -540,
+   "bottom_y": 120
+  }
+ ]
+}
