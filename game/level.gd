@@ -36,10 +36,10 @@ const SLOT_SCENES := {
 }
 # Punching bag in the Boxing area (punches), in front of the breakable wall (kicks).
 const PUNCHING_BAG_X := 23500.0
-const TUNNEL_CEILING := preload("res://game/art/tunnel_ceiling.png")
-const TUNNEL_WALL := preload("res://game/art/tunnel_wall.png")
-const TUNNEL_FLOOR := preload("res://game/art/tunnel_floor.png")
-# Anchors from pecas_extra/props.json (source px inside each image).
+const TUNNEL_CEILING := preload("res://assets/pecas_extra/tunnel_ceiling.png")
+const TUNNEL_WALL := preload("res://assets/pecas_extra/tunnel_wall.png")
+const TUNNEL_FLOOR := preload("res://assets/pecas_extra/tunnel_floor.png")
+# Anchors from pecas_extra/props.json (world units inside each image, ART_PIXEL per texel).
 const TUNNEL_CEILING_EDGE_Y := 88.0
 const TUNNEL_FLOOR_SURFACE_Y := 9.0
 
@@ -281,7 +281,7 @@ func _add_ground(x0: float, x1: float, y: float, surface: StringName, a: int) ->
 	body.add_child(fill)
 	if surface == &"dirt":
 		fill.color = Color("#221c20")
-		var floor_sprite := _strip(TUNNEL_FLOOR, x1 - x0, TUNNEL_FLOOR.get_height())
+		var floor_sprite := _strip(TUNNEL_FLOOR, x1 - x0)
 		floor_sprite.position = Vector2(0, -TUNNEL_FLOOR_SURFACE_Y)
 		body.add_child(floor_sprite)
 		return
@@ -391,14 +391,17 @@ func _add_block(x0: float, x1: float, top: float, thickness: float, ledges: Stri
 		body.add_child(ledge)
 
 
-# Source-px art (pecas_extra) repeated over a width/height, drawn at 1:1.
-func _strip(texture: Texture2D, width: float, height: float) -> Sprite2D:
+# Pixel art (pecas_extra, one texel per art pixel) repeated over a width and height in world units;
+# the height defaults to the whole texture.
+func _strip(texture: Texture2D, width: float, height := 0.0) -> Sprite2D:
+	var a := float(GameScale.art_pixel())
 	var sprite := Sprite2D.new()
 	sprite.texture = texture
 	sprite.centered = false
 	sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	sprite.region_enabled = true
-	sprite.region_rect = Rect2(0, 0, width, height)
+	sprite.scale = Vector2(a, a)
+	sprite.region_rect = Rect2(0, 0, width / a, height / a if height > 0.0 else float(texture.get_height()))
 	return sprite
 
 
@@ -431,7 +434,7 @@ func _build_tunnel(a: int) -> void:
 	mass.color = Color("#2a2226")
 	mass.size = Vector2(length, mass_height - TUNNEL_CEILING_EDGE_Y)
 	body.add_child(mass)
-	var edge := _strip(TUNNEL_CEILING, length, TUNNEL_CEILING.get_height())
+	var edge := _strip(TUNNEL_CEILING, length)
 	edge.position = Vector2(0, mass_height - TUNNEL_CEILING_EDGE_Y)
 	body.add_child(edge)
 	for x in [TUNNEL_X0, TUNNEL_X1 - TUNNEL_FRAME_WIDTH]:

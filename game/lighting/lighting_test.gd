@@ -8,9 +8,9 @@ const PixelArt := preload("res://game/pixel_art.gd")
 const GameScale := preload("res://game/game_scale.gd")
 const Lighting := preload("res://game/lighting/lighting.gd")
 const ZONE_SCENE := preload("res://game/lighting/lighting_zone.tscn")
-const TUNNEL_CEILING := preload("res://game/art/tunnel_ceiling.png")
-const TUNNEL_WALL := preload("res://game/art/tunnel_wall.png")
-const TUNNEL_FLOOR := preload("res://game/art/tunnel_floor.png")
+const TUNNEL_CEILING := preload("res://assets/pecas_extra/tunnel_ceiling.png")
+const TUNNEL_WALL := preload("res://assets/pecas_extra/tunnel_wall.png")
+const TUNNEL_FLOOR := preload("res://assets/pecas_extra/tunnel_floor.png")
 
 const A := 6
 const X0 := 0.0
@@ -99,13 +99,15 @@ func _shot(shot_name: String) -> void:
 	_busy -= 1
 
 
-func _strip(texture: Texture2D, width: float, height: float) -> Sprite2D:
+func _strip(texture: Texture2D, width: float, height := 0.0) -> Sprite2D:
+	var a := float(GameScale.art_pixel())
 	var sprite := Sprite2D.new()
 	sprite.texture = texture
 	sprite.centered = false
 	sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	sprite.region_enabled = true
-	sprite.region_rect = Rect2(0, 0, width, height)
+	sprite.scale = Vector2(a, a)
+	sprite.region_rect = Rect2(0, 0, width / a, height / a if height > 0.0 else float(texture.get_height()))
 	return sprite
 
 
@@ -137,12 +139,12 @@ func _build_world() -> void:
 	back.z_index = -5
 	add_child(back)
 	_rect(Vector2(X0, 0), Vector2(length, 800), Color("#221c20"))
-	var floor_sprite := _strip(TUNNEL_FLOOR, length, TUNNEL_FLOOR.get_height())
+	var floor_sprite := _strip(TUNNEL_FLOOR, length)
 	floor_sprite.position = Vector2(X0, -9)
 	add_child(floor_sprite)
 	var mass_h := CEILING_Y - TOP_Y
 	_rect(Vector2(X0, TOP_Y), Vector2(length, mass_h - 88), Color("#2a2226"))
-	var edge := _strip(TUNNEL_CEILING, length, TUNNEL_CEILING.get_height())
+	var edge := _strip(TUNNEL_CEILING, length)
 	edge.position = Vector2(X0, CEILING_Y - 88)
 	add_child(edge)
 	for x in [X0, X1 - FRAME_W]:

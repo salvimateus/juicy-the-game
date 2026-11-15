@@ -148,16 +148,19 @@ func _draw_scenery(holder: Node2D, frame: Dictionary, cell: Vector2i) -> void:
 		holder.add_child(st)
 	if frame.has("ledge"):
 		var corner: Vector2 = frame.ledge
+		# ledge.png is one texel per art pixel; the sheet is in world units.
 		var tex := load("res://assets/pecas_extra/ledge.png") as Texture2D
+		var a := float(RigConfig.ART_PIXEL)
 		var y := corner.y - 6.0
 		while y < cell.y:
 			var s := Sprite2D.new()
 			s.texture = tex
 			s.centered = false
+			s.scale = Vector2(a, a)
 			s.position = Vector2(corner.x - 6.0, y)
 			if y > corner.y:
 				s.region_enabled = true
-				s.region_rect = Rect2(0, 96, 264, 72)
+				s.region_rect = Rect2(0, 96 / a, 264 / a, 72 / a)
 			holder.add_child(s)
 			y += 180.0 if y < corner.y else 72.0
 		var marker := ColorRect.new()

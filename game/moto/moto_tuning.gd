@@ -70,10 +70,10 @@ const CRASH_MIN_SPEED := 0.0
 const SETTLE_STEPS := 150
 
 # --- Geometry (local, from the centre of mass; measured on assets/moto/*.png) --------------------
-const FRONT_AXLE := Vector2(177, 36)
-const REAR_AXLE := Vector2(-190, 34.7)
+const FRONT_AXLE := Vector2(219, 72)
+const REAR_AXLE := Vector2(-190, 70.7)
 # Swingarm pivot on the frame (the pixel corner next to the eye centre).
-const SWING_PIVOT := Vector2(-24, 42)
+const SWING_PIVOT := Vector2(-24, 78)
 const PEG := Vector2(-75, 33)
 const GRIP_POINT := Vector2(45, -183)
 const SEAT := Vector2(-45, -114)
@@ -83,9 +83,9 @@ const CRASH_POINTS := [Vector2(75, -204), Vector2(-159, -120), Vector2(-276, -11
 # The rider's head over the bike: crashes too, but is no contact once the rider is thrown off.
 const HEAD_POINT := Vector2(-20, -350)
 # Frame points that only collide once crashed (skid plate, footpeg).
-const BODY_POINTS := [Vector2(0, 66), Vector2(-75, 40)]
+const BODY_POINTS := [Vector2(0, 87), Vector2(-75, 40)]
 # Unit direction the front wheel travels along when the fork compresses (up the fork).
-const FORK_AXIS := Vector2(-0.38, -0.925)
+const FORK_AXIS := Vector2(-0.416, -0.909)
 # Where the rider stands to mount and lands after getting off: x from the footpeg.
 const MOUNT_DX := -40.0
 const DISMOUNT_DX := -40.0

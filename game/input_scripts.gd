@@ -7,6 +7,39 @@ extends RefCounted
 #   ["joy", device, connected] (fakes Input.joy_connection_changed).
 
 const SCRIPTS := {
+	# Character art check: idle with six hair-wind frames, walk, run, jump, crouch and a jab.
+	"art_poses": {
+		"spawn": Vector2(600, 0),
+		"relative": true,
+		"steps": [
+			[1.0, "shot", "01_idle"],
+			[0.33, "shot", "02_wind_a"],
+			[0.33, "shot", "03_wind_b"],
+			[0.33, "shot", "04_wind_c"],
+			[0.33, "shot", "05_wind_d"],
+			[0.33, "shot", "06_wind_e"],
+			[0.33, "shot", "07_wind_f"],
+			[0.0, "press", "move_right", 0.4],
+			[1.2, "shot", "08_walk"],
+			[0.0, "press", "move_right", 1.0],
+			[1.2, "shot", "09_run"],
+			[0.0, "release", "move_right"],
+			[0.8, "press", "jump", 1.0],
+			[0.25, "shot", "10_jump_rise"],
+			[0.0, "release", "jump"],
+			[0.0, "wait", "floor", 3.0],
+			[0.6, "press", "move_down", 1.0],
+			[0.8, "shot", "11_crouch"],
+			[0.0, "release", "move_down"],
+			[0.8, "tap", "attack"],
+			[0.12, "shot", "12_jab"],
+			[0.8, "press", "move_left", 1.0],
+			[0.8, "shot", "13_run_left"],
+			[0.0, "release", "move_left"],
+			[1.0, "shot", "14_idle_left"],
+			[0.2, "quit"],
+		],
+	},
 	"locomotion": {
 		"spawn": Vector2(600, 0),
 		"steps": [

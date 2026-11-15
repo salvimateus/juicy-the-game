@@ -55,6 +55,7 @@ const LT := preload("res://rig/clips/locomotion_tuning.gd")
 const HISTORY := 128
 const WORLD_FLOATS := 28 * 6
 const PART_SHADER := preload("res://rig/rig_part.gdshader")
+const HAIR_SHADER := preload("res://rig/rig_hair.gdshader")
 const FX_SHADER := preload("res://rig/fx/rig_fx.gdshader")
 const DRAW_ORDER_RULES := [
 	[],
@@ -187,6 +188,9 @@ var _ghost_sprites: Array = []
 var _fx_back: MultiMeshInstance2D
 var _fx_front: MultiMeshInstance2D
 var _material: ShaderMaterial
+var _hair_index := -1
+var _hair_material: ShaderMaterial
+var _ghost_hair_materials: Array[ShaderMaterial] = []
 
 # History of rendered frames for afterimages.
 var _hist_world := PackedFloat32Array()
@@ -310,6 +314,8 @@ func _step_fx_params(g: RigGait) -> Dictionary:
 func _build_nodes() -> void:
 	_material = ShaderMaterial.new()
 	_material.shader = PART_SHADER
+	_hair_index = rig.part_index.get("hair", -1)
+	_hair_material = _make_hair_material()
 	var ghosts := Node2D.new()
 	ghosts.name = "Ghosts"
 	add_child(ghosts)
@@ -319,6 +325,9 @@ func _build_nodes() -> void:
 		ghosts.add_child(group)
 		_ghost_groups.append(group)
 		_ghost_sprites.append(_make_sprites(group, null))
+		_ghost_hair_materials.append(_make_hair_material())
+		if _hair_index >= 0:
+			(_ghost_sprites[i][_hair_index] as Sprite2D).material = _ghost_hair_materials[i]
 	var fx_mat := ShaderMaterial.new()
 	fx_mat.shader = FX_SHADER
 	_fx_back = MultiMeshInstance2D.new()
@@ -332,12 +341,51 @@ func _build_nodes() -> void:
 	_parts_node.material = _material
 	add_child(_parts_node)
 	_sprites.assign(_make_sprites(_parts_node, _material))
+	if _hair_index >= 0:
+		_sprites[_hair_index].use_parent_material = false
+		_sprites[_hair_index].material = _hair_material
 	_fx_front = MultiMeshInstance2D.new()
 	_fx_front.name = "FxFront"
 	_fx_front.multimesh = RigFx.create_multimesh()
 	_fx_front.texture = rig.atlas
 	_fx_front.material = fx_mat
 	add_child(_fx_front)
+
+
+func _make_hair_material() -> ShaderMaterial:
+	if _hair_index < 0:
+		return null
+	var part: RigData.Part = rig.parts[_hair_index]
+	var art := float(RigConfig.ART_PIXEL)
+	var m := ShaderMaterial.new()
+	m.shader = HAIR_SHADER
+	m.set_shader_parameter("region", Vector4(part.region.position.x, part.region.position.y, part.region.size.x, part.region.size.y))
+	# Root on the scalp: the hair bone joint, in the hair image.
+	var root := part.pivot - Vector2(part.src.position) + Vector2(rig.bone_x[RigBone.HAIR], rig.bone_y[RigBone.HAIR])
+	m.set_shader_parameter("root", root / art)
+	m.set_shader_parameter("art_pixel", art)
+	return m
+
+
+## Hair bone pose relative to the head (rotation, offset in art pixels), fed to the hair shader.
+func _hair_bend(world: PackedFloat32Array, base: int) -> Vector3:
+	var h := base + RigBone.HEAD * 6
+	var o := base + RigBone.HAIR * 6
+	var a := world[h]
+	var b := world[h + 1]
+	var c := world[h + 2]
+	var d := world[h + 3]
+	var det := a * d - b * c
+	if absf(det) < 1e-6:
+		return Vector3.ZERO
+	var x := (d * world[o] - c * world[o + 1]) / det
+	var y := (-b * world[o] + a * world[o + 1]) / det
+	var ex := world[o + 4] - world[h + 4]
+	var ey := world[o + 5] - world[h + 5]
+	var lx := (d * ex - c * ey) / det - rig.bone_x[RigBone.HAIR]
+	var ly := (-b * ex + a * ey) / det - rig.bone_y[RigBone.HAIR]
+	var art := float(RigConfig.ART_PIXEL)
+	return Vector3(atan2(y, x), lx / art, ly / art)
 
 
 func _make_sprites(parent: Node, mat: Material) -> Array[Sprite2D]:
@@ -1210,6 +1258,8 @@ func _render() -> void:
 	if rig == null:
 		return
 	_apply_sprites(_sprites, _world, 0, pose.props, pose)
+	if _hair_material:
+		_hair_material.set_shader_parameter("bend", _hair_bend(_world, 0))
 	var preset := pose.draw_order
 	if preset == 0:
 		var neck_y := _world[RigBone.NECK * 6 + 5]
@@ -1235,6 +1285,9 @@ func _render() -> void:
 		var amount := pose.flash if pose.flash > 0.0 else pose.tint
 		_material.set_shader_parameter("fill_amount", amount)
 		_material.set_shader_parameter("fill_color", Color.WHITE if pose.flash > 0.0 else pose.tint_color)
+		if _hair_material:
+			_hair_material.set_shader_parameter("fill_amount", amount)
+			_hair_material.set_shader_parameter("fill_color", Color.WHITE if pose.flash > 0.0 else pose.tint_color)
 	fx.update(_time)
 	fx.upload(_fx_back.multimesh, _fx_front.multimesh, global_position)
 	_render_ghosts()
@@ -1257,6 +1310,8 @@ func _render_ghosts() -> void:
 		group.self_modulate = Color(1, 1, 1, fx.ghost_alpha[g])
 		group.position = _hist_pos[best] - global_position
 		_apply_sprites(_ghost_sprites[g], _hist_world, best * WORLD_FLOATS, _hist_props[best], null)
+		if _ghost_hair_materials[g]:
+			_ghost_hair_materials[g].set_shader_parameter("bend", _hair_bend(_hist_world, best * WORLD_FLOATS))
 
 
 # ---------------------------------------------------------------------------------------------

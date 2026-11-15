@@ -1,14 +1,18 @@
 class_name RigData
 extends RefCounted
 ## Skeleton, parts, props and anchors of the adventurer, plus the packed atlas shared by parts and FX.
-## Rig units: 1 unit = 1 source PNG pixel, y down, origin on the ground under the hip at rest,
-## positive rotation clockwise on screen.
+## Rig units: world units, y down, origin on the ground under the hip at rest, positive rotation
+## clockwise on screen. Body parts (pecas) are true pixel art: their pivots and crops are in art
+## pixels and the images are upscaled by ART_PIXEL at load. Props (pecas_extra) are pixel art too:
+## their PNGs are upscaled by props.json "pixel" (world units per PNG pixel, ART_PIXEL by default) and
+## their props.json coordinates stay in world units.
 
 const PIECES_DIR := "res://assets/pecas/"
 const EXTRA_DIR := "res://assets/pecas_extra/"
 const PROPS_JSON := "res://assets/pecas_extra/props.json"
 const ATLAS_WIDTH := 1024
 const ATLAS_PAD := 2
+const ART := preload("res://rig/rig_config.gd").ART_PIXEL
 
 # name, parent, x, y, rest rotation (deg). Parent-first; hip stays bone 0 and each arm keeps
 # upper arm, forearm and hand consecutive (solve_leg / solve_arm rely on it).
@@ -44,29 +48,31 @@ const BONES := [
 ]
 
 # Base draw order, back to front. pivot (full-image coordinates) lands on the bone joint; src crops.
-# cabelo.png is not drawn: the head already carries the hair. The back arm (B) moves in front of the
-# head while raised (see the Adventurer draw orders).
+# Both are in art pixels (1 PNG pixel); "pad" adds transparent art pixels around the image. The hair
+# rides the head bone and bends in its shader (see Adventurer hair). The back arm (B) moves in front
+# of the head while raised (see the Adventurer draw orders).
 const PARTS := [
-	{"name": "scarfTail", "bone": "scarf2", "image": "cachecol.png", "pivot": [78, 50], "src": [0, 0, 86, 95]},
-	{"name": "scarfMid", "bone": "scarf1", "image": "cachecol.png", "pivot": [148, 22], "src": [72, 0, 84, 95]},
-	{"name": "foreArmB", "bone": "foreArmB", "image": "antebraco_dir.png", "pivot": [30, 8]},
-	{"name": "handB", "bone": "handB", "image": "mao_dir.png", "pivot": [35, 8]},
-	{"name": "upperArmB", "bone": "upperArmB", "image": "braco_superior_dir.png", "pivot": [35, 14]},
-	{"name": "thighB", "bone": "thighB", "image": "coxa_dir.png", "pivot": [44, 12]},
-	{"name": "footB", "bone": "footB", "image": "bota_dir.png", "pivot": [40, 42], "src": [0, 34, 102, 51]},
-	{"name": "shaftB", "bone": "shinB", "image": "bota_dir.png", "pivot": [62, -12], "src": [0, 0, 102, 44]},
-	{"name": "kneeB", "bone": "kneeB", "image": "canela_dir.png", "pivot": [62, 40], "src": [0, 19, 87, 55]},
-	{"name": "thighF", "bone": "thighF", "image": "coxa_esq.png", "pivot": [46, 12]},
-	{"name": "footF", "bone": "footF", "image": "bota_esq.png", "pivot": [40, 42], "src": [0, 34, 105, 51]},
-	{"name": "shaftF", "bone": "shinF", "image": "bota_esq.png", "pivot": [45, -12], "src": [0, 0, 105, 44]},
-	{"name": "kneeF", "bone": "kneeF", "image": "canela_esq.png", "pivot": [47, 40], "src": [0, 19, 92, 54]},
-	{"name": "body", "bone": "torso", "image": "corpo.png", "pivot": [100, 140]},
-	{"name": "belt", "bone": "waist", "image": "cinto_bolsa.png", "pivot": [95, 25]},
-	{"name": "scarfWrap", "bone": "scarfWrap", "image": "cachecol.png", "pivot": [190, 30], "src": [142, 0, 124, 95]},
-	{"name": "foreArmF", "bone": "foreArmF", "image": "antebraco_esq.png", "pivot": [32, 8]},
-	{"name": "handF", "bone": "handF", "image": "mao_esq.png", "pivot": [35, 8]},
-	{"name": "upperArmF", "bone": "upperArmF", "image": "braco_superior_esq.png", "pivot": [40, 14]},
-	{"name": "head", "bone": "head", "image": "cabeca.png", "pivot": [80, 110], "src": [0, 0, 142, 119]},
+	{"name": "scarfTail", "bone": "scarf2", "image": "cachecol.png", "pivot": [13, 8], "src": [0, 0, 15, 15]},
+	{"name": "scarfMid", "bone": "scarf1", "image": "cachecol.png", "pivot": [26, 3], "src": [12, 0, 16, 15]},
+	{"name": "foreArmB", "bone": "foreArmB", "image": "antebraco_dir.png", "pivot": [7, 2]},
+	{"name": "handB", "bone": "handB", "image": "mao_dir.png", "pivot": [6, 1]},
+	{"name": "upperArmB", "bone": "upperArmB", "image": "braco_superior_dir.png", "pivot": [6, 2]},
+	{"name": "thighB", "bone": "thighB", "image": "coxa_dir.png", "pivot": [7, 1]},
+	{"name": "footB", "bone": "footB", "image": "bota_dir.png", "pivot": [6, 6.5], "src": [0, 5, 17, 8]},
+	{"name": "shaftB", "bone": "shinB", "image": "bota_dir.png", "pivot": [10, -2], "src": [0, 0, 17, 7]},
+	{"name": "kneeB", "bone": "kneeB", "image": "canela_dir.png", "pivot": [8, 7], "src": [0, 3, 12, 9]},
+	{"name": "thighF", "bone": "thighF", "image": "coxa_esq.png", "pivot": [7, 1]},
+	{"name": "footF", "bone": "footF", "image": "bota_esq.png", "pivot": [6, 6.5], "src": [0, 5, 16, 8]},
+	{"name": "shaftF", "bone": "shinF", "image": "bota_esq.png", "pivot": [7, -2], "src": [0, 0, 16, 7]},
+	{"name": "kneeF", "bone": "kneeF", "image": "canela_esq.png", "pivot": [7, 7], "src": [0, 3, 13, 9]},
+	{"name": "body", "bone": "torso", "image": "corpo.png", "pivot": [19, 26]},
+	{"name": "belt", "bone": "waist", "image": "cinto_bolsa.png", "pivot": [18, 4]},
+	{"name": "scarfWrap", "bone": "scarfWrap", "image": "cachecol.png", "pivot": [34, 5], "src": [25, 0, 22, 15]},
+	{"name": "foreArmF", "bone": "foreArmF", "image": "antebraco_esq.png", "pivot": [7, 2]},
+	{"name": "handF", "bone": "handF", "image": "mao_esq.png", "pivot": [6, 1]},
+	{"name": "upperArmF", "bone": "upperArmF", "image": "braco_superior_esq.png", "pivot": [6, 2]},
+	{"name": "head", "bone": "head", "image": "cabeca.png", "pivot": [9, 16]},
+	{"name": "hair", "bone": "head", "image": "cabelo.png", "pivot": [15, 19], "pad": 4, "follows": "head"},
 ]
 
 const FOOT_ANKLE_HEIGHT := 39.0
@@ -83,7 +89,7 @@ const ANCHORS := {
 	"heelF": ["footF", -30, 39], "heelB": ["footB", -30, 39],
 	"soleF": ["footF", 10, 39], "soleB": ["footB", 10, 39],
 	"fistF": ["handF", 0, 66], "fistB": ["handB", 0, 66],
-	"chest": ["torso", 22, -92], "headTop": ["head", -8, -112],
+	"chest": ["torso", 22, -92], "headTop": ["head", -27, -114],
 	"gripF": ["gripF", 0, 0], "gripB": ["gripB", 0, 0],
 }
 
@@ -99,7 +105,7 @@ const PROP_DEFAULTS := {
 }
 
 # A new non-point [x, y] pair in props.json must be listed here or it turns into an anchor.
-const NON_POINT_KEYS := ["size", "file", "bone", "pivotPoint", "drawBefore", "drawAfter", "hides", "scene", "angle", "pivot", "replaces", "string", "frameSize", "headAnchor", "frames", "field"]
+const NON_POINT_KEYS := ["size", "file", "bone", "pivotPoint", "drawBefore", "drawAfter", "hides", "scene", "angle", "pivot", "replaces", "string", "frameSize", "headAnchor", "frames", "field", "pixel"]
 
 
 class Leg:
@@ -233,9 +239,7 @@ func _build() -> void:
 
 	var specs: Array[Dictionary] = []
 	for p in PARTS:
-		specs.append(p.duplicate())
-	for spec in specs:
-		_load_image(PIECES_DIR, spec.image)
+		specs.append(_art_spec(p))
 	_load_props(specs)
 	parts.clear()
 	for spec in specs:
@@ -246,7 +250,20 @@ func _build() -> void:
 	_build_atlas()
 
 
-func _load_image(dir: String, file: String) -> Image:
+# Loads a body part image upscaled to world units and converts its art-pixel pivot and crop.
+func _art_spec(p: Dictionary) -> Dictionary:
+	var spec := p.duplicate()
+	var pad := int(spec.get("pad", 0))
+	var img := _load_image(PIECES_DIR, spec.image, ART, pad)
+	var pv: Array = spec.pivot
+	spec.pivot = [(pv[0] + pad) * ART, (pv[1] + pad) * ART]
+	if spec.has("src"):
+		var s: Array = spec.src
+		spec.src = [s[0] * ART, s[1] * ART, s[2] * ART, s[3] * ART]
+	return spec
+
+
+func _load_image(dir: String, file: String, upscale := 1, pad := 0) -> Image:
 	if images.has(file):
 		return images[file]
 	var path := dir + file
@@ -259,6 +276,12 @@ func _load_image(dir: String, file: String) -> Image:
 	if img.is_compressed():
 		img.decompress()
 	img.convert(Image.FORMAT_RGBA8)
+	if pad > 0:
+		var padded := Image.create_empty(img.get_width() + pad * 2, img.get_height() + pad * 2, false, Image.FORMAT_RGBA8)
+		padded.blit_rect(img, Rect2i(Vector2i.ZERO, img.get_size()), Vector2i(pad, pad))
+		img = padded
+	if upscale > 1:
+		img.resize(img.get_width() * upscale, img.get_height() * upscale, Image.INTERPOLATE_NEAREST)
 	images[file] = img
 	return img
 
@@ -313,7 +336,7 @@ func _load_props(specs: Array[Dictionary]) -> void:
 			continue
 		var spec: Dictionary = all[key]
 		var file: String = spec.get("file", "%s.png" % key)
-		var img := _load_image(EXTRA_DIR, file)
+		var img := _load_image(EXTRA_DIR, file, int(spec.get("pixel", ART)))
 		if img == null:
 			continue
 		if spec.has("headAnchor") and spec.has("frames"):
@@ -402,7 +425,7 @@ func _load_hammer(all: Dictionary, specs: Array[Dictionary]) -> void:
 	if not spec.has("pivot"):
 		return
 	var file: String = spec.get("file", "revolver_hammer.png")
-	if _load_image(EXTRA_DIR, file) == null:
+	if _load_image(EXTRA_DIR, file, int(spec.get("pixel", ART))) == null:
 		return
 	hammer_angle[bi] = deg_to_rad(float(spec.get("cockedAngle", 0)))
 	var part := {"name": "revolverHammer", "bone": "revolverHammer", "image": file, "pivot": spec.pivot, "prop": "revolver", "propBit": gun.bit, "follows": "revolver"}

@@ -18,7 +18,7 @@ const Ricochet := preload("res://game/ricochet/ricochet.gd")
 const STEPS := 16
 const ANGLE_STEP := TAU / STEPS
 const GROUP := &"arrow"
-# Tip of the arrow in art px of arrow.png (props.json "tip" / ART_PIXEL).
+# Tip of the arrow in art px of arrow.png (props.json "tip" / ART_PIXEL); the PNG is one texel per art pixel.
 const TIP := Vector2(21, 3.5)
 
 enum State { FLYING, TUMBLING, STUCK, FADING }
@@ -94,8 +94,7 @@ static func spawn(parent: Node, global_pos: Vector2, direction: Vector2, speed: 
 
 static func sheet() -> Dictionary:
 	if _sheet.is_empty():
-		var a := GameScale.art_pixel()
-		var img := PixelRotate.art_image(TEXTURE, a)
+		var img := PixelRotate.load_art(TEXTURE)
 		_sheet = PixelRotate.build(img, TIP, PixelRotate.angle_range(0.0, TAU - ANGLE_STEP, ANGLE_STEP))
 	return _sheet
 

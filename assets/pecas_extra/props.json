@@ -1,6 +1,7 @@
 {
   "pixelSize": 6,
   "revolver": {
+    "pixel": 3,
     "size": [144, 81],
     "grip": [28.5, 39],
     "muzzle": [144, 13.5],
@@ -71,24 +72,25 @@
   },
   "bow": {
     "size": [
-      84,
+      72,
       186
     ],
     "grip": [
-      69,
+      57,
       93
     ],
     "stringTop": [
-      24,
+      12,
       9
     ],
     "stringBottom": [
-      24,
+      12,
       177
     ],
     "angle": 0
   },
   "revolver_hammer": {
+    "pixel": 3,
     "size": [24, 21],
     "pivot": [18, 15],
     "cockedAngle": -28
@@ -146,6 +148,7 @@
     "faceX": 6
   },
   "ak47": {
+    "pixel": 3,
     "size": [252, 81],
     "grip": [75, 48],
     "foregrip": [168, 22.5],
@@ -169,8 +172,8 @@
       0
     ],
     "headAnchor": [
-      94,
-      98
+      72,
+      84
     ]
   },
   "tunnel_ceiling": {
