@@ -9,7 +9,8 @@ const UPSCALE_PASSES := 3
 const ATLAS_WIDTH := 512
 
 
-# Art-pixel image of a source-px texture drawn in `a`-sized blocks (pecas_extra style).
+# Art-pixel image of a texture drawn in `a`-sized texel blocks (one sample per block). The
+# pecas_extra PNGs are already one texel per art pixel: load them with load_art instead.
 static func art_image(texture: Texture2D, a: int) -> Image:
 	var src := texture.get_image()
 	if src.is_compressed():
